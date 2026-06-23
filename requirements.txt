@@ -1,0 +1,6 @@
+# No third-party dependencies — the app uses only the Python standard library.
+# Tkinter ships with CPython (on Linux you may need the system package
+# python3-tk; see README.md).
+#
+# Optional, only for building a standalone executable:
+# pyinstaller>=6.0
