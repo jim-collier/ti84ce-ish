@@ -39,8 +39,8 @@ def grab(app, path):
     app.update_idletasks()
     app.update()
     pump(app, 0.3)
-    wid = app.winfo_id()
-    subprocess.run(["import", "-window", str(wid), path], check=True)
+    window_id = app.winfo_id()
+    subprocess.run(["import", "-window", str(window_id), path], check=True)
 
 
 def scene_calc_history(app, calc):
