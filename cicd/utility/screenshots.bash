@@ -61,13 +61,16 @@ fMain(){
 	fSection "Capturing"
 	xvfb-run -a -s "-screen 0 1920x1080x24" python3 "${meDir}/screenshots.py" "${largeDir}"
 
-	## Downsample to thumbnails (shrink-only; '>' never upsamples).
+	## Strip volatile metadata from the captures so re-runs are byte-identical
+	## (no timestamp churn showing up as a git diff), then downsample to
+	## thumbnails (shrink-only; '>' never upsamples). Thumbnails are stripped too.
 	fSection "Downsampling"
 	local png baseName
 	for png in "${largeDir}"/*.png; do
 		[[ -e "${png}" ]] || continue
 		baseName="$(basename "${png}")"
-		import_magick "${png}" "${smallDir}/${baseName}"
+		fStripMeta "${png}"
+		fResizeStripped "${png}" "${smallDir}/${baseName}"
 		fEcho_Clean "  ${baseName}"
 	done
 
@@ -80,11 +83,12 @@ fMain(){
 }
 
 
-## Resize wrapper: prefer `magick`, fall back to `convert`.
-import_magick(){
-	if command -v magick >/dev/null 2>&1; then magick "$1" -resize "${maxLong}x${maxLong}>" "$2"
-	else convert "$1" -resize "${maxLong}x${maxLong}>" "$2"; fi
-}
+## ImageMagick wrapper: prefer `magick` (v7), fall back to `convert` (v6).
+## '-strip' plus excluding the date/time chunks drops the only bytes that vary
+## between otherwise-identical runs, so committed images stay stable.
+fMagick(){ if command -v magick >/dev/null 2>&1; then magick "$@"; else convert "$@"; fi; }
+fStripMeta(){ fMagick "$1" -strip -define png:exclude-chunks=date,time "$1"; }
+fResizeStripped(){ fMagick "$1" -resize "${maxLong}x${maxLong}>" -strip -define png:exclude-chunks=date,time "$2"; }
 
 
 ## Emit the responsive gallery HTML. Percentage widths let the thumbnails shrink
