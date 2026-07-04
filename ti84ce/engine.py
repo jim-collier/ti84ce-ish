@@ -84,8 +84,12 @@ class Engine:
             raise
         except ZeroDivisionError as exc:
             raise CalculatorError("Divide by 0") from exc
-        except (ValueError, OverflowError) as exc:
+        except (ValueError, TypeError, OverflowError) as exc:
             raise CalculatorError(f"Math error: {exc}") from exc
+        # Real-mode calculator: a negative base to a fractional power gives a
+        # complex result in Python; reject it like a real hardware calculator.
+        if isinstance(value, complex):
+            raise CalculatorError("Non-real result")
         return value
 
     def eval_function(self, expression: str, x: float) -> float:
@@ -129,6 +133,9 @@ class Engine:
 
     def _eval_node(self, node: ast.AST) -> Any:
         if isinstance(node, ast.Constant):
+            # bool is a subclass of int; a calculator has no True/False literal.
+            if isinstance(node.value, bool):
+                raise CalculatorError("Invalid constant")
             if isinstance(node.value, (int, float)):
                 return node.value
             raise CalculatorError("Invalid constant")
