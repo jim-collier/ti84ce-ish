@@ -43,6 +43,18 @@ In each section, items are listed approximately from newest to oldest.
 
 ### New features and enhancements
 
+- ✅ Local CI/CD script overhaul
+	- Done: split into a generic engine plus per-project config, added quiet, message, and quick flags.
+	- Done: publish can run hands-off with a supplied or auto commit message.
+	- Verified: runs the tests, builds the executable, installs it locally, and refreshes the screenshots.
+- ✅ Fuzz and security test suites
+	- Done: added a stdlib-only fuzz sweep and a security suite that pins down the calculator whitelist.
+	- Fixed: the calculator now rejects non-real results and boolean literals, both surfaced by the fuzzer.
+	- Verified: full suite passes.
+- ✅ Screenshot gallery
+	- Done: headless capture of four use-cases, downsampled thumbnails, and a responsive gallery in the README.
+	- Verified: thumbnails render and open the full-size originals.
+
 ### Deferred
 
 ### Canceled
