@@ -84,16 +84,16 @@ class TestFuzzGrammar(unittest.TestCase):
         for _ in range(min(ITERS, 500)):
             expr = _expr(rng)
             try:
-                ra = eng.eval_no_store(expr)
+                first = eng.eval_no_store(expr)
             except CalculatorError:
                 with self.assertRaises(CalculatorError):
                     eng.eval_no_store(expr)
                 continue
-            rb = eng.eval_no_store(expr)
-            if math.isnan(ra):
-                self.assertTrue(math.isnan(rb))
+            second = eng.eval_no_store(expr)
+            if math.isnan(first):
+                self.assertTrue(math.isnan(second))
             else:
-                self.assertEqual(ra, rb, f"non-deterministic result for {expr!r}")
+                self.assertEqual(first, second, f"non-deterministic result for {expr!r}")
 
 
 class TestFuzzGarbage(unittest.TestCase):
@@ -108,8 +108,8 @@ class TestFuzzGarbage(unittest.TestCase):
         # that noise isn't the calculator's doing, so mute it for the sweep.
         warnings.simplefilter("ignore", SyntaxWarning)
         for _ in range(ITERS):
-            n = rng.randint(0, 24)
-            junk = "".join(rng.choice(self._ALPHABET) for _ in range(n))
+            length = rng.randint(0, 24)
+            junk = "".join(rng.choice(self._ALPHABET) for _ in range(length))
             try:
                 value = eng.evaluate(junk)
             except CalculatorError:

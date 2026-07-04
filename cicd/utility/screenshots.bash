@@ -63,12 +63,12 @@ fMain(){
 
 	## Downsample to thumbnails (shrink-only; '>' never upsamples).
 	fSection "Downsampling"
-	local f base
-	for f in "${largeDir}"/*.png; do
-		[[ -e "${f}" ]] || continue
-		base="$(basename "${f}")"
-		import_magick "${f}" "${smallDir}/${base}"
-		fEcho_Clean "  ${base}"
+	local png baseName
+	for png in "${largeDir}"/*.png; do
+		[[ -e "${png}" ]] || continue
+		baseName="$(basename "${png}")"
+		import_magick "${png}" "${smallDir}/${baseName}"
+		fEcho_Clean "  ${baseName}"
 	done
 
 	## Rebuild the README gallery block.
@@ -92,11 +92,11 @@ import_magick(){
 fBuildGallery(){
 	echo '<!-- SCREENSHOTS:START -->'
 	echo '<div align="center">'
-	local f base name cap
-	for f in "${smallDir}"/*.png; do
-		[[ -e "${f}" ]] || continue
-		base="$(basename "${f}")"; name="${base%.png}"; cap="$(fCaption "${name}")"
-		echo "<a href=\"assets/screenshots/large/${base}\"><img src=\"assets/screenshots/small/${base}\" alt=\"${cap}\" title=\"${cap}\" width=\"23%\"></a>"
+	local png baseName shotName caption
+	for png in "${smallDir}"/*.png; do
+		[[ -e "${png}" ]] || continue
+		baseName="$(basename "${png}")"; shotName="${baseName%.png}"; caption="$(fCaption "${shotName}")"
+		echo "<a href=\"assets/screenshots/large/${baseName}\"><img src=\"assets/screenshots/small/${baseName}\" alt=\"${caption}\" title=\"${caption}\" width=\"23%\"></a>"
 	done
 	echo '</div>'
 	echo '<!-- SCREENSHOTS:END -->'
