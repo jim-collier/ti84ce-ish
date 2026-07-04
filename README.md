@@ -153,6 +153,17 @@ dist\ti84ce.exe      # Windows
 - **GRAPH**: edit a `Y=` field and press `Enter` to re-plot.
 - **PYTHON**: `F5` or `Ctrl+Enter` to run.
 
+## Screenshots
+
+<!-- SCREENSHOTS:START -->
+<div align="center">
+<a href="assets/screenshots/large/01-calc.png"><img src="assets/screenshots/small/01-calc.png" alt="Scientific calculator" title="Scientific calculator" width="23%"></a>
+<a href="assets/screenshots/large/02-graph.png"><img src="assets/screenshots/small/02-graph.png" alt="Function graphing" title="Function graphing" width="23%"></a>
+<a href="assets/screenshots/large/03-python.png"><img src="assets/screenshots/small/03-python.png" alt="Python editor and console" title="Python editor and console" width="23%"></a>
+<a href="assets/screenshots/large/04-calc-2nd.png"><img src="assets/screenshots/small/04-calc-2nd.png" alt="2nd-function keypad" title="2nd-function keypad" width="23%"></a>
+</div>
+<!-- SCREENSHOTS:END -->
+
 ## Copyright and license
 
 > Copyright © 2026 Jim Collier (ID: 1cv◂‡Vᛦ)<br />
