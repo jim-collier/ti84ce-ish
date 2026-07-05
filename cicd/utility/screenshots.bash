@@ -31,8 +31,8 @@ maxLong=640                                     ## thumbnail longest side
 declare -gi _wasLastEchoBlank=0
 _sectionBar="•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
 fEcho_Clean(){
-	local -r s="${1:-}"
-	if [[ -n "${s}" ]]; then echo -e "${s}"; _wasLastEchoBlank=0
+	local -r text="${1:-}"
+	if [[ -n "${text}" ]]; then echo -e "${text}"; _wasLastEchoBlank=0
 	elif ((! _wasLastEchoBlank)); then echo; _wasLastEchoBlank=1; fi
 }
 fEcho(){ { [[ -z "${1:-}" ]] && fEcho_Clean ""; } || fEcho_Clean "[ ${1} ]"; }

@@ -134,17 +134,17 @@ class TestFuzzLibraryBoundary(unittest.TestCase):
     def test_math_domain_and_overflow(self):
         rng = random.Random(2718)
         eng = Engine(angle_mode=RAD)
-        calls = ["sqrt", "ln", "log", "asin", "acos", "acosh", "atanh",
-                 "factorial", "exp", "tan"]
+        func_names = ["sqrt", "ln", "log", "asin", "acos", "acosh", "atanh",
+                      "factorial", "exp", "tan"]
         for _ in range(ITERS):
-            fn = rng.choice(calls)
+            func_name = rng.choice(func_names)
             arg = rng.choice([
                 rng.uniform(-1e6, 1e6),
                 rng.uniform(-2, 2),
                 rng.randint(-5, 200),
                 float("inf") * rng.choice([1, -1]),
             ])
-            expr = f"{fn}({arg})"
+            expr = f"{func_name}({arg})"
             try:
                 eng.evaluate(expr)
             except CalculatorError:
