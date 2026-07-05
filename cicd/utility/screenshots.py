@@ -65,21 +65,21 @@ def scene_graph_trig(app, graph):
     graph.plot()
 
 
-def scene_python_run(app, py):
+def scene_python_run(app, python_frame):
     app._select_tab(2)
     # The app runs code on a worker thread; without a real mainloop its after()
     # callback can't post back. For a static capture, run it inline and fill the
     # console directly with the same result the user would see.
-    code = py.editor.get("1.0", "end")
-    buf = io.StringIO()
-    env = {"__name__": "__main__", "math": math, "engine": py.engine}
+    code = python_frame.editor.get("1.0", "end")
+    buffer = io.StringIO()
+    env = {"__name__": "__main__", "math": math, "engine": python_frame.engine}
     try:
-        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
+        with contextlib.redirect_stdout(buffer), contextlib.redirect_stderr(buffer):
             exec(compile(code, "<editor>", "exec"), env)
     except Exception:  # noqa: BLE001 - surface user errors just like the app
-        buf.write("\n" + traceback.format_exc())
-    py.clear_output()
-    py._write(buf.getvalue() or "(no output)\n")
+        buffer.write("\n" + traceback.format_exc())
+    python_frame.clear_output()
+    python_frame._write(buffer.getvalue() or "(no output)\n")
 
 
 def scene_calc_second(app, calc):
@@ -98,12 +98,12 @@ def main():
     app.update_idletasks()
     app.update()
 
-    calc, graph, py = app._tab_frames
+    calc, graph, python_frame = app._tab_frames
 
     shots = [
         ("01-calc", lambda: scene_calc_history(app, calc)),
         ("02-graph", lambda: scene_graph_trig(app, graph)),
-        ("03-python", lambda: scene_python_run(app, py)),
+        ("03-python", lambda: scene_python_run(app, python_frame)),
         ("04-calc-2nd", lambda: scene_calc_second(app, calc)),
     ]
 
