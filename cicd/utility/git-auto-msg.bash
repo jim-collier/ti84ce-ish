@@ -7,6 +7,11 @@
 ##		  already pre-filled one (e.g. a `pull --no-ff` merge message), leave it.
 ##		  Either way, never block on an editor.
 
+##	Copyright © 2026 Bubbles (ID: XଌฅრX۳ᛟԃლፀƅꓩหδლც)
+##	Licensed under The MIT License (MIT). Full text at:
+##		https://mit-license.org/
+##	SPDX-License-Identifier: MIT
+
 set -euo pipefail
 
 file="$1"
