@@ -166,5 +166,5 @@ dist\ti84ce.exe      # Windows
 
 ## Copyright and license
 
-> Copyright © 2026 Jim Collier (ID: 1cv◂‡Vᛦ)<br />
+> Copyright © 2026 Jim Collier [ID: 2უNაɘ«҂թȹɤξπ๙¿ձϖ]<br />
 > Licensed under the GPLv3 License. See [license.md](license.md).
